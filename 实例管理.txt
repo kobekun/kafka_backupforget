@@ -1,0 +1,88 @@
+
+
+查看实例
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180604014.html
+
+重启实例
+	只有当Kafka专享版实例处于“运行中”或“故障”状态，才能执行重启操作。
+	重启Kafka专享版实例只会重启实例进程，不会重启实例所在虚拟机。
+	Kafka专享版实例重启成功后，Kafka专享版实例状态切换为“运行中”。
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180604015.html
+
+删除实例
+	Kafka专享版实例删除后，实例中原有的数据将被删除，且没有备份，请谨慎操作。
+	Kafka专享版实例状态为运行中、故障、已冻结的按需付费实例才能执行删除操作。
+	包年/包月类型的Kafka专享版实例，不支持进行删除和批量删除操作。若不再使用，可单击“操作”栏下的“更多 > 退订”进行退订。
+	创建失败的实例，不会占用其他资源。
+	在“创建失败任务”界面删除创建失败的Kafka专享版实例。
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180604016.html
+
+修改实例信息
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180604017.html	
+	如果是修改“容量阈值策略”、“公网访问”和“kafka自动创建Topic”，修改完成后，系统跳转到“后台任务管理”页签，并显示当前任务的操作进度和结果。
+	如果是修改“实例名称”、“描述”、“维护时间窗”、“企业项目”和“安全组”，修改完后，右上角直接提示修改结果。
+
+设置实例公网访问
+	公网访问支持的区域如下：华北-北京一、华北-北京四、华东-上海一、华东-上海二、华南-广州，其中部分区域不支持“基准带宽”为“100MB/s”的Kafka实例开启公网访问，具体以控制台为准。
+	只有处于“运行中”状态的Kafka专享实例支持修改公网访问配置。
+	Kafka专享实例只支持绑定IPv4弹性IP地址。
+
+	开启公网访问。关闭公网访问。https://support.huaweicloud.com/usermanual-kafka/kafka-ug-0319001.html
+
+按需转包周期
+	实例所在行，单击“更多 > 转包周期”，页面提示是否确定执行转包周期操作。
+	如果需要批量转包周期，在实例名称左侧的方框，可选多个相同状态的实例，然后单击“转包周期”。
+
+重置SASL_SSL密码
+	仅开启Kafka SASL_SSL认证的Kafka专享实例才可以重置SASL_SSL密码。
+	只有处于“运行中”状态的Kafka专享实例支持重置SASL_SSL密码。
+	在“用户管理”页签，在待重置SASL_SSL密码的用户所在行，单击“重置密码”
+	只有所有代理都重置密码成功，系统才会提示重置密码成功，否则会提示重置失败。
+
+重置Kafka Manager密码
+	只有处于“运行中”状态的Kafka专享实例支持重置Manager密码。
+	只有所有代理都重置密码成功，系统才会提示重置密码成功，否则会提示重置失败。
+
+重启Kafka Manager
+	重启Kafka Manager不会影响业务。
+	需要重启Manager的Kafka专享实例右侧，单击“更多 > 重启Manager”，弹出“重启kafka-Manager”对话框。
+
+开启实例转储
+	1、消息包含消息属性（由属性名及属性值组成，以K-V的形式体现）时，属性名key不支持转储，属性值value支持转储。
+	2、当前开启转储后，暂不支持关闭转储。
+	3、消息进行转储时，不支持以key作为文件名。
+	4、在华东-上海一、华东-上海二、华北-北京四和华南-广州区域，使用新实例规格创建的实例，不支持开启转储，具体以控制台为准。
+
+	创建转储任务 https://support.huaweicloud.com/usermanual-kafka/kafka-ug-1812260001.html
+
+管理实例标签
+	标签是Kafka实例的标识，为Kafka实例添加标签，可以方便用户识别和管理拥有的Kafka实例资源。
+	https://support.huaweicloud.com/usermanual-kafka/TagManagement.html
+
+查看实例后台任务
+	对实例的一些操作，如修改公网访问开关、修改容量阈值策略等，会启动一个后台任务，您可以在后台任务页，查看该操作的状态等信息，同时可通过删除操作，清理任务信息。
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-200119002.html
+
+查看磁盘使用量
+	在控制台磁盘存储统计中，查看每个代理上磁盘的使用量。
+
+创建SASL_SSL用户
+	创建SASL_SSL用户，并在Topic中为SASL_SSL用户设置不同的权限，以达到SASL_SSL用户之间的权限隔离。
+	授权SASL_SSL用户 https://support.huaweicloud.com/usermanual-kafka/kafka-ug-0002.html
+
+查询消息
+	选择“消息查询”页签，在消息页签页面，设置查询的Topic名称以及查询方式。
+	查询方式支持以下两种方式：
+	1、按创建时间查询：即按生产该消息的时间。
+	2、按偏移量查询：即记录消息的位置。
+
+
+
+
+
+
+
+
+
+
+

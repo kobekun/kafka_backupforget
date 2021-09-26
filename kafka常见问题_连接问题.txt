@@ -1,0 +1,89 @@
+
+Kafka连接问题排查和解决
+	https://support.huaweicloud.com/kafka_faq/kafka-faq-0604001.html
+
+选择和配置安全组	
+	1、建议ECS、Kafka专享实例配置相同的安全组。安全组创建后，默认包含组内网络访问不受限制的规则。
+	2、如果配置了不同安全组，可参考如下配置方式：https://support.huaweicloud.com/kafka_faq/kafka-faq-180604024.html
+
+Kafka专享实例是否支持公网访问？
+	Kafka专享实例支持公网访问。具体访问操作，请参考连接Kafka(https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180604020.html)。
+
+Kafka实例的连接地址默认有多少个？
+	kafka实例的连接地址个数和实例的代理个数有关，连接地址个数即为代理个数。每类实例规格对应的代理个数，请参考实例规格(https://support.huaweicloud.com/productdesc-kafka/Kafka-specification.html)。
+
+是否支持跨Region访问？
+	Kafka可以跨Region访问，但是跨Region目前只能通过公网访问或者拉专线的方式。
+
+客户端是否可以通过DNAT方式访问Kafka实例？
+	可以
+
+Kafka专享实例是否支持跨VPC访问？
+	Kafka专享版实例支持跨VPC访问，您可以通过以下任意一个方式实现跨VPC访问：
+	1、创建VPC对等连接，将两个VPC的网络打通，实现跨VPC访问。具体步骤请参考VPC对等连接说明。
+	2、创建一个云连接实例，然后在创建的云连接实例中加载需要互通的VPC，实现跨VPC访问。具体步骤请参考同区域同帐号VPC互通。
+	3、利用VPC终端节点在不同VPC间建立跨VPC的连接通道，实现Kafka客户端通过内网访问Kafka专享版实例。具体步骤请参考跨VPC访问Kafka专享版实例。
+
+Kafka专享实例是否支持不同的子网？
+	支持。
+	客户端与实例在相同VPC内，可以跨子网段访问。
+	客户端与实例在不同VPC时，可通过创建VPC对等连接，将两个VPC的网络打通，实现跨VPC访问实例。关于创建和使用VPC对等连接，请参考VPC对等连接说明。
+	此外，可以为实例绑定公网地址，客户端访问实例公网地址即可。
+
+使用GO客户端无法连接Kafka SSL
+	https://support.huaweicloud.com/kafka_faq/kafka-faq-200426021.html
+
+SASL客户端连接加载证书失败
+	在使用SASL客户端连接时，加载证书失败，需要在配置文件中添加以下参数：
+	#关闭证书域名校验
+	ssl.endpoint.identification.algorithm=
+
+Kafka是否支持kerberos认证，如何开启认证？
+	kafka支持SASL客户端认证、调用接口支持token和ak/sk两种认证，kerberos认证目前不支持。
+	如果使用SASL认证方式，则在开源客户端基础上使用分布式消息服务Kafka版提供的证书文件。具体操作参考连接开启SASL的Kafka实例(https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180801001.html)。
+
+Kafka实例是否支持无密码访问？
+	Kafka实例的无密码访问，即未开启SSL访问，具体操作，请参考未开启SSL连接(https://support.huaweicloud.com/qs-kafka/kafka-qs-0409006.html)。
+Kafka开源客户端获取
+	Kafka专享实例完全兼容开源客户端，如果您使用其他语言，也可以从Kafka官网获取客户端（https://cwiki.apache.org/confluence/display/KAFKA/Clients），按照Kafka官网提供的连接说明，与Kafka专享实例对接。
+
+开启公网访问后，在哪查看公网IP地址？
+	进入实例详情页面。在“基本信息”页签，公网访问》kafka访问地址，查看公网IP地址。
+
+Kafka支持服务端认证客户端吗？
+	不支持
+
+连接开启SASL_SSL的Kafka实例时，ssl truststore文件可以用pem格式的吗？
+	使用Java语言连接实例时，只能使用jks格式的证书，不支持转成pem格式。
+
+下载的证书jks和crt有什么区别？
+	使用Java语言连接实例时，需要用jks格式的证书。使用Python语言连接实例时，需要用crt格式的证书。
+
+Kafka支持TLS 1.0、1.1还是1.2？
+	Kafka支持TLS 1.2。
+
+Kafka实例连接数有限制吗？
+	基准带宽为100MB/s时，Kafka客户端连接数在3000以内。
+	基准带宽为300MB/s时，Kafka客户端连接数在10000以内。
+	基准带宽为600MB/s时，Kafka客户端连接数在20000以内。
+	基准带宽为1200MB/s时，Kafka客户端连接数在20000以内。
+
+Kafka服务器允许客户端单IP连接的个数为多少？
+	2020年7月以及之后购买的实例，Kafka服务器允许客户端单IP连接的个数为1000个，在此之前购买的实例，Kafka服务器允许客户端单IP连接的个数为200个，如果超过了，会出现连接失败问题。您可以通过修改配置参数(https://support.huaweicloud.com/usermanual-kafka/kafka-ug-0007.html)来修改单IP的连接数。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+
+producer参数
+	acks
+		默认：1。acks=0：表示producer不需要等待任何确认收到的信息，副本将立即加到socket buffer并认为已经发送。
+		acks=1：这意味着至少要等待leader已经成功将数据写入本地log，但是并没有等待所有follower是否成功写入。如果follower没有成功备份数据，而此时leader又无法提供服务，则消息会丢失。
+		acks=all：这意味着leader需要等待所有备份都成功写入日志，只有任何一个备份存活，数据都不会丢失。
+
+	retries
+		默认：0。客户端发送消息的重试次数。值大于0时，这些数据发送失败后，客户端会重新发送。
+
+	request.timeout.ms
+		默认：30000。
+		设置一个请求最大等待时间，超过这个时间则会抛Timeout异常。
+		超时时间如果设置大一些，如120000（120秒），高并发的场景中，能减少发送失败的情况。
+
+	block.on.buffer.full
+		默认：TRUE
+		TRUE表示当我们内存用尽时，停止接收新消息记录或者抛出错误。
+		默认情况下，这个设置为TRUE。然而某些阻塞可能不值得期待，因此立即抛出错误更好。如果设置为false，则producer抛出一个异常错误：BufferExhaustedException
+
+	batch.size
+		默认：16384 推荐：262144
+		默认的批量处理消息字节数上限。producer将试图批处理消息记录，以减少请求次数。这将改善client与server之间的性能。不会试图处理大于这个字节数的消息字节数。
+		较小的批量处理数值比较少用，并且可能降低吞吐量（0则会仅用批量处理）。较大的批量处理数值将会浪费更多内存空间，这样就需要分配特定批量处理数值的内存大小。
+
+	buffer.memory
+		默认：33554432 推荐：67108864
+		producer可以用来缓存数据的内存大小。如果数据产生速度大于向broker发送的速度，producer会阻塞或者抛出异常，以“block.on.buffer.full”来表明。
+		这项设置将和producer能够使用的总内存相关，但并不是一个硬性的限制，因为不是producer使用的所有内存都是用于缓存。一些额外的内存会用于压缩（如果引入压缩机制），同样还有一些用于维护请求。
+
+Consumer参数
+	auto.commit.enable
+		默认值：TRUE  推荐值：FALSE
+		如果为真，consumer所fetch的消息的offset将会自动的同步到zookeeper。这项提交的offset将在进程无法提供服务时，由新的consumer使用。
+		约束： 设置为false后，需要先成功消费再提交，这样可以避免消息丢失。
+
+	auto.offset.reset
+		默认值：latest	推荐值：earliest
+		没有初始化offset或者offset被删除时，可以设置以下值：
+		earliest：自动复位offset为最早
+		latest：自动复位offset为最新
+		none：如果没有发现offset则向消费者抛出异常
+		anything else：向消费者抛出异常。
+	
+	connections.max.idle.ms
+		默认值：600000  默认值：30000	
+		空连接的超时时间，设置为30000可以在网络异常场景下减少请求卡顿的时间。
+
+客户端使用规范
+	
+	producer/consumer使用规范:https://support.huaweicloud.com/bestpractice-kafka/Kafka-client-best-practice.html
+	
+	topic使用规范
+		配置要求：推荐3副本，同步复制，最小同步副本数为2，且同步副本数不能等于topic副本数，否则宕机1个副本会导致无法生产消息。
+		创建方式：支持选择是否开启kafka自动创建Topic的开关。选择开启后，表示生产或消费一个未创建的Topic时，会自动创建一个包含3个分区和3个副本的Topic。
+		单topic最大分区数建议为100。
+		topic副本数为3（当前版本限制，不可调整）（需要控制台确认？？？？）。
+
+	其他建议
+		连接数限制：3000
+		消息大小：不能超过10MB
+		使用sasl_ssl协议访问Kafka：确保DNS具有反向解析能力，或者在hosts文件配置kafka所有节点ip和主机名映射，避免Kafka client做反向解析，阻塞连接建立。
+		磁盘容量申请超过业务量 * 副本数的2倍，即保留磁盘空闲50%左右。
+		业务进程JVM内存使用确保无频繁FGC，否则会阻塞消息的生产和消费。
+
+如何设置消费组可消费消息数超过阈值时，发送告警短信/邮件
+	https://support.huaweicloud.com/bestpractice-kafka/Kafka-bp-0001.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

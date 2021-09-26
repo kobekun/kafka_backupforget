@@ -1,0 +1,76 @@
+客户端网络环境说明
+	客户端可以通过以下方式访问Kafka实例：
+		1、VPC内子网地址访问
+		如果客户端是云上ECS，与Kafka实例处于同region同VPC，则可以直接访问Kafka实例提供的VPC内子网地址。
+		2、VPC对等连接方式访问
+		如果客户端是云上ECS，与Kafka实例处于相同region但不同VPC，则可以通过建立VPC对等连接后，访问Kafka实例提供的VPC内子网地址。(https://support.huaweicloud.com/usermanual-vpc/vpc_peering_0000.html)
+		3、公网访问
+		客户端在其他网络环境，或者与Kafka实例处于不同region，则访问实例的公网地址。
+		公网访问时，注意修改Kafka实例的安全组，允许端口9095被外部网络访问。
+		
+收集连接信息
+	https://support.huaweicloud.com/devg-kafka/Kafka-config.html
+
+Java客户端接入示例
+	本文介绍Maven方式引入Kafka客户端，并完成Kafka实例连接以及消息生产与消费的相关示例。如果您需要在IDE中查看Demo具体表现
+	https://support.huaweicloud.com/devg-kafka/Kafka-java-demo.html	
+		
+Java开发环境搭建
+	https://support.huaweicloud.com/devg-kafka/how-to-connect-kafka.html
+		
+python
+	https://support.huaweicloud.com/devg-kafka/kafka-python.html
+		
+Go
+	https://support.huaweicloud.com/devg-kafka/kafka-go.html
+
+Kafka开源客户端获取
+	Kafka专享实例完全兼容开源客户端，如果您使用其他语言，也可以从Kafka官网获取客户端(https://cwiki.apache.org/confluence/display/KAFKA/Clients)，按照Kafka官网提供的连接说明，与Kafka专享实例对接	
+		
+客户端使用建议
+	生产消息
+		1、消息发送失败需要有重试机制。
+			建议重试3次，通过参数：retries=3 配置
+		2、生产的callback函数不能阻塞，否则会阻塞客户端消息的发送
+			对于时延敏感消息，设置发送优化：linger.ms=0。
+		3、生产端的JVM内存要足够，避免内存不足导致发送阻塞。
+		
+	消费消息
+		1、consumer的owner线程需确保不会异常退出，否则会导致客户端没有发起消费请求，阻塞消费。
+		2、使用长连接poll模式消费消息，不要消费结束就关闭consumer通道，这样会导致频繁rebalance，阻塞消费。
+		3、consumer需周期性poll（建议间隔为200毫秒），维持和server端的心跳，避免因为心跳超时导致consumer频繁加入和退出，阻塞消费。
+		4、消费线程退出要调用consumer的close方法，避免同一个组的其他消费者阻塞sesstion.timeout.ms的时间。
+		5、consumer的session根据业务情况设置一个合理值，如30秒：session.timeout.ms=30000。
+		6、consumer数量不能超过topic的分区数，否则会有consumer拉取不到消息。
+		7、确保处理完消息后再做消息commit，避免业务消息处理失败，无法重新拉取处理失败的消息。
+		8、consumer拉取的消息本地缓存应有大小限制，避免OOM（内存溢出）。
+		9、Kafka不能保证消费重复的消息，业务侧需保证消息处理的幂等性。
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

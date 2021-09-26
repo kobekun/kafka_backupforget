@@ -1,0 +1,84 @@
+
+支持的监控指标
+	实例支持的监控项：分区数、主题数、堆积消息数
+	节点监控指标：
+		broker_data_size	节点数据容量	该指标用于统计节点当前的消息数据大小
+		broker_messages_in_rate	消息生产速率	该指标用于统计每秒生产的消息数量。
+		broker_bytes_out_rate	消费流量	该指标用于统计每秒消费的字节数。
+		broker_bytes_in_rate	生产流量	该指标用于统计每秒生产的字节数。
+		broker_public_bytes_in_rate	公网入流量	统计Broker节点每秒公网访问流入流量。
+		broker_public_bytes_out_rate	公网出流量	统计Broker节点每秒公网访问流出流量。
+		broker_disk_usage	磁盘容量使用率	该指标为从Kafka节点虚拟机层面采集的磁盘容量使用率。
+		broker_memory_usage	内存使用率	该指标为Kafka节点虚拟机层面采集的内存使用率。
+		broker_heap_usage	Kafka进程JVM堆内存使用率	该指标从Kafka节点Kafka进程JVM中采集的堆内存使用率。
+		broker_connections	连接数	统计Kafka节点当前所有TCP连接数量。(2020年4月及以后购买的实例，支持此监控项。)
+		broker_cpu_usage	CPU使用率	统计Kafka节点虚拟机的CPU使用率。
+		broker_disk_read_await	
+	
+	队列、消费组监控的指标见：https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180413002.html
+
+必须配置的监控告警
+	Kafka实例配置告警的指标 (统计周期都为1分钟)
+		磁盘容量使用率	告警阈值：原始值>85 连续触发次数：3 告警级别：紧急	处理建议：出现该告警时，需要修改实例存储空间
+		CPU核均负载	告警阈值：原始值>1.5	处理建议：出现该告警时，需要修改实例基准带宽，即扩节点。https://support.huaweicloud.com/usermanual-kafka/kafka-ug-181221001.html
+		内存使用率	告警阈值：原始值>85		处理建议：出现该告警时，需要修改实例基准带宽，即扩节点。
+		Kafka进程JVM堆内存使用率	告警阈值：原始值>85	处理建议：出现该告警时，需要修改实例基准带宽，即扩节点。
+	操作步骤 https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180524001.html
+
+支持云审计的操作列表
+	通过云审计服务，您可以记录与分布式消息服务Kafka版相关的操作事件，便于日后的查询、审计和回溯。甚至问题的定位
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180418002.html
+
+查看云审计日志
+	云审计服务管理控制台保存最近7天的操作记录。
+	https://support.huaweicloud.com/usermanual-kafka/kafka-ug-180418003.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+
+
+系统提示“Disk error when trying to access log file on the disk”错误。
+	根因：节点磁盘使用率超高导致生产消息失败。
+	解决：扩容实例的磁盘空间，具体操作请参考变更实例规格(https://support.huaweicloud.com/usermanual-kafka/kafka-ug-181221001.html)。
+
+删除Topic不生效，删除后该Topic仍然存在。
+	根因：实例开启了自动创建Topic功能，且有消费者正在连接该Topic。如果没有停止业务，删除Topic后，还会有消息生产行为，并自动创建Topic。
+	解决：关闭Kafka自动创建Topic功能，才可以正常删除Topic。
+
+在Windows服务器中无法登录Kafka Manager
+	现象：在Windows服务器的浏览器中输入Kafka Manager地址，无法登录Kafka Manager
+	根因：
+		1、Windows服务器和Kafka实例不在同一个VPC同一个子网内，或者安全组配置不正确，导致网络无法连通。
+		2、Kafka Manager异常。
+	解决：
+		1、检查Windows服务器和Kafka实例是否在同一个VPC同一个子网内？
+			是，执行2。
+			否，修改Windows服务器的VPC和子网，与Kafka实例一致。
+		2、检查安全组是否配置正确？安全组的配置请参考选择和配置安全组(https://support.huaweicloud.com/kafka_faq/kafka-faq-180604024.html)。
+			是，执行3。
+			否，修改安全组配置。
+		3、在Kafka实例控制台中，重启Kafka Manager，具体操作请参考重启Kafka Manager(https://support.huaweicloud.com/usermanual-kafka/kafka-ug-200728001.html)。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
